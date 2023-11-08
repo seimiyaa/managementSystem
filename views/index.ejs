@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>User list</title>
+        <style>
+            /* ボタンのスタイル */
+            .button {
+                display: inline-block;
+                padding: 5px;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <p><a class="button" href="/create">ユーザーの追加</a></p>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>kana_name</th>
+                <th>gender</th>
+                <th>email</th>
+                <th>phone</th>
+                <th>address</th>
+                <th>workplace</th>
+                <th>household</th>
+            </tr>
+            <% personas.forEach(function(persona) { %>
+                <tr>
+                    <td>
+                        <%= persona.id %>
+                    </td>
+                    <td>
+                        <%= persona.name %>
+                    </td>
+                    <td>
+                        <%= persona.kana_name %>
+                    </td>
+                    <td>
+                        <%= persona.gender %>
+                    </td>
+                    <td>
+                        <%= persona.email %>
+                    </td>
+                    <td>
+                        <%= persona.phone %>
+                    </td>
+                    <td>
+                        <%= persona.address %>
+                    </td>
+                    <td>
+                        <%= persona.workplace %>
+                    </td>
+                    <td>
+                        <%= persona.household %>
+                    </td>
+                    <td>
+                        <a class="button" href="/edit/<%= persona.id %>">更新</a>
+                        <a class="button" href="/delete/<%= persona.id %>">削除</a>
+                    </td>
+                </tr>
+                <% }); %>
+        </table>
+        <script type="text/javascript">
+        </script>
+    </body>
+</html>

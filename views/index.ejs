@@ -5,34 +5,58 @@
         <title>User list</title>
         <style>
             /* ボタンのスタイル */
-            .button {
-                display: inline-block;
-                padding: 5px;
+            .custom-button {
                 background-color: #007bff;
                 color: #fff;
-                text-decoration: none;
+                padding: 5px 10px;
                 border: none;
-                border-radius: 4px;
+                border-radius: 5px;
                 cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+                margin-right: 10px;
+                font-size: 12px;
+            }
+
+            .select-button {
+                font-size: 12px;
+                ;
             }
         </style>
     </head>
     <body>
-        <p><a class="button" href="/create">ユーザーの追加</a></p>
+        <p><a class="custom-button" href="/create">ユーザーの追加</a></p>
         <label for="filterKeyword">名前絞り込み: </label>
         <input type="text" id="filterKeyword">
-        <button class="button" id="filterButton">絞り込み</button>
+        <button class="custom-button" id="filterButton">絞り込み</button>
+        <div id="selectedInfo">
+            <h3>選択した情報一覧</h3>
+            <table id="selectedTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Kana Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Workplace</th>
+                    <th>Household</th>
+                </tr>
+            </table>
+        </div>
+        <h3>DB情報一覧</h3>
         <table>
             <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>kana_name</th>
-                <th>gender</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>address</th>
-                <th>workplace</th>
-                <th>household</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Kana Name</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Workplace</th>
+                <th>Household</th>
             </tr>
             <% personas.forEach(function(persona) { %>
                 <tr>
@@ -64,8 +88,9 @@
                         <%= persona.household %>
                     </td>
                     <td>
-                        <a class="button" href="/edit/<%= persona.id %>">更新</a>
-                        <a class="button" href="/delete/<%= persona.id %>">削除</a>
+                        <a class="custom-button" href="/edit/<%= persona.id %>">更新</a>
+                        <a class="custom-button" href="/delete/<%= persona.id %>">削除</a>
+                        <button class="custom-button select-button" data-id="<%= persona.id %>">選択</button>
                     </td>
                 </tr>
                 <% }); %>
@@ -83,6 +108,73 @@
                         row.style.display = "";
                     } else {
                         row.style.display = "none";
+                    }
+                });
+            });
+            let personas = JSON.parse('<%= JSON.stringify(personas) %>'.replace(/&#34;/g, '"'));
+            var selectedInfo = [];
+
+            document.querySelectorAll(".select-button").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    console.log("ボタンがクリックされました");
+
+                    var userId = parseInt(button.getAttribute("data-id"), 10);
+                    console.log("選択ボタンのdata-id: " + userId);
+
+                    var selectedPersona = personas.find(function (persona) {
+                        console.log("persona.id: " + persona.id);
+                        return persona.id === userId;
+                    });
+                    console.log("選択したユーザー情報: ", selectedPersona);
+
+
+                    if (selectedPersona) {
+                        selectedInfo.push(selectedPersona);
+
+                        console.log("選択したユーザー情報: ", selectedPersona);
+
+                        var row = button.parentElement.parentElement;
+                        row.style.display = "none";
+
+                        var selectedTable = document.getElementById("selectedTable");
+                        // 新しい行を作成
+                        var newRow = selectedTable.insertRow();
+
+                        // ID
+                        var cell1 = newRow.insertCell(0);
+                        cell1.textContent = selectedPersona.id;
+
+                        // 名前
+                        var cell2 = newRow.insertCell(1);
+                        cell2.textContent = selectedPersona.name;
+
+                        // カナ名
+                        var cell3 = newRow.insertCell(2);
+                        cell3.textContent = selectedPersona.kana_name;
+
+                        // 性別
+                        var cell4 = newRow.insertCell(3);
+                        cell4.textContent = selectedPersona.gender;
+
+                        // メールアドレス
+                        var cell5 = newRow.insertCell(4);
+                        cell5.textContent = selectedPersona.email;
+
+                        // 電話番号
+                        var cell6 = newRow.insertCell(5);
+                        cell6.textContent = selectedPersona.phone;
+
+                        // 住所
+                        var cell7 = newRow.insertCell(6);
+                        cell7.textContent = selectedPersona.address;
+
+                        // 職場
+                        var cell8 = newRow.insertCell(7);
+                        cell8.textContent = selectedPersona.workplace;
+
+                        // 世帯情報
+                        var cell9 = newRow.insertCell(8);
+                        cell9.textContent = selectedPersona.household;
                     }
                 });
             });

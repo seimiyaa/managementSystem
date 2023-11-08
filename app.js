@@ -26,6 +26,14 @@ app.get("/", (req, res) => {
     });
   });
 });
+app.post("/", (req, res) => {
+  const sql = "INSERT INTO personas SET ?";
+  con.query(sql, req.body, function (err, personas, fields) {
+    if (err) throw err;
+    console.log(personas);
+    res.redirect("/");
+  });
+});
 
 app.get("/create", (req, res) => {
   res.sendFile(path.join(__dirname, "html/form.html"));

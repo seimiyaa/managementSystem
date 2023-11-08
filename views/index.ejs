@@ -19,6 +19,9 @@
     </head>
     <body>
         <p><a class="button" href="/create">ユーザーの追加</a></p>
+        <label for="filterKeyword">名前絞り込み: </label>
+        <input type="text" id="filterKeyword">
+        <button class="button" id="filterButton">絞り込み</button>
         <table>
             <tr>
                 <th>id</th>
@@ -68,6 +71,21 @@
                 <% }); %>
         </table>
         <script type="text/javascript">
+            document.getElementById("filterButton").addEventListener("click", function () {
+                var keyword = document.getElementById("filterKeyword").value.toLowerCase();
+                var nameCells = document.querySelectorAll('td:nth-child(2)');
+
+                nameCells.forEach(function (cell) {
+                    var nameValue = cell.textContent.toLowerCase();
+                    var row = cell.parentElement;
+
+                    if (nameValue.includes(keyword)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
         </script>
     </body>
 </html>

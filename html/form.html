@@ -2,142 +2,171 @@
     <meta charset="UTF-8">
     <title>入力フォーム</title>
     <style type="text/css">
-        input[type="text"] {
-            width: 400px;
-            height: 40px;
-            background: #f5f5dc;
-            border: 1px solid #bebebe;
-            border-radius: 5px;
-            font-size: 1em;
-            text-indent: 0.7em;
-        }
-
-        input[type="text"]:focus {
-            background: #f0fff0;
-            border: 1px solid #4881d9;
-        }
-
-        .form {
+        .top-form {
             text-align: center;
         }
 
-        #label {
-            text-align: right;
-            font-size: 20px;
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        #button {
+        .form-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-label {
+            width: 150px;
+            text-align: right;
+            margin-right: 5px;
+        }
+
+        input[type="text"] {
+            width: 250px;
+            padding: 5px;
+        }
+
+        .form-button-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            position: relative;
-            width: 250px;
-            margin: 0 auto;
-            padding: .5em 3em .5em 2em;
-            border: 1px solid #87c040;
-            border-radius: 10px;
-            background-color: #fff;
-            color: #87c040;
-            font-size: 1em;
+            margin-top: 10px;
         }
 
-        #button::after {
-            position: absolute;
-            right: 2em;
-            transform: translateY(-50%);
-            transform-origin: left;
-            width: 2em;
-            height: .5em;
-            background-color: #87c040;
-            clip-path: polygon(0 100%, 100% 100%, 70% 40%, 70% 90%, 0% 90%);
-            content: '';
-            transition: transform .3s;
-        }
-
-        #button:hover::after {
-            transform: translateY(-50%) scaleX(1.4);
-        }
-
-        .box-010 {
-            position: relative;
-            max-width: 400px;
-            margin: 1.5em auto;
-            padding: 2.5em 1.5em 1.5em;
-            box-shadow: 0 2px 3px rgb(0 0 0 / 20%);
-            background-color: #f0fff0;
-            color: #333333;
-        }
-
-        .box-010 span {
-            position: absolute;
-            top: -15px;
-            transform: translateX(-.3em) rotate(-5deg);
-            padding: 1.2em 4em;
-            border-right: 2px dotted rgb(0 0 0 / 10%);
-            border-left: 2px dotted rgb(0 0 0 / 10%);
-            box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-            background-color: rgb(255 255 255 / 40%);
-            font-weight: 600;
-        }
-
-        .box-010 h1 {
-            margin: 0;
-            text-align: center;
+        #form-button {
+            padding: 5px 10px;
         }
     </style>
 </head>
 <body>
-    <div class="box-010">
+    <div class="top-form">
         <span></span>
         <h1>入力フォーム</h1>
     </div>
     <!--ここに追加-->
-    <div class="form">
+    <div class="form-container">
         <form action="/" method="POST" onsubmit="return validateForm()">
-            <label for="id" id="label">id: </label><input type="text" id="id" name="id"><br>
-            <br>
-            <label for="name" id="label">name: </label><input type="text" id="name" name="name"><br>
-            <br>
-            <label for="kana_name" id="label">kana_name: </label><input type="text" id="kana_name" name="kana_name"><br>
-            <br>
-            <label for="gender" id="label">gender: </label><input type="text" id="gender" name="gender"><br>
-            <br>
-            <label for="email" id="label">email: </label><input type="text" id="email" name="email"><br>
-            <br>
-            <label for="phone" id="label">phone: </label><input type="text" id="phone" name="phone"><br>
-            <br>
-            <label for="address" id="label">address: </label><input type="text" id="address" name="address"><br>
-            <br>
-            <label for="workplace" id="label">workplace: </label><input type="text" id="workplace" name="workplace"><br>
-            <br>
-            <label for="household" id="label">household: </label><input type="text" id="household" name="household"><br>
-            <br>
-            <button type="submit" id="button">送信</button>
+            <div class="form-field">
+                <label for="id" class="form-label">id:</label>
+                <input type="text" id="id" name="id">
+            </div>
+            <div class="form-field">
+                <label for="name" class="form-label">name:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-field">
+                <label for="kana_name" class="form-label">kana_name:</label>
+                <input type="text" id="kana_name" name="kana_name">
+            </div>
+            <div class="form-field">
+                <label for="gender" class="form-label">gender:</label>
+                <input type="text" id="gender" name="gender">
+            </div>
+            <div class="form-field">
+                <label for="email" class="form-label">email:</label>
+                <input type="text" id="email" name="email">
+            </div>
+            <div class="form-field">
+                <label for="phone" class="form-label">phone:</label>
+                <input type="text" id="phone" name="phone">
+            </div>
+            <div class="form-field">
+                <label for="address" class="form-label">address:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-field">
+                <label for="workplace" class="form-label">workplace:</label>
+                <input type="text" id="workplace" name="workplace">
+            </div>
+            <div class="form-field">
+                <label for="household" class="form-label">household:</label>
+                <input type="text" id="household" name="household">
+            </div>
+            <div class="form-button-container">
+                <button type="submit" id="form-button">送信</button>
+            </div>
         </form>
     </div>
     <script>
-
         function validateForm() {
+            var idInput = document.getElementById("id");
             var nameInput = document.getElementById("name");
+            var kanaNameInput = document.getElementById("kana_name");
+            var genderInput = document.getElementById("gender");
             var emailInput = document.getElementById("email");
-            var nameValue = nameInput.value;
-            var emailValue = emailInput.value;
+            var phoneInput = document.getElementById("phone");
+            var addressInput = document.getElementById("address");
+            var workplaceInput = document.getElementById("workplace");
+            var householdInput = document.getElementById("household");
 
-            // 名前のバリデーション
-            var namePattern = /^[A-Za-z.]+$/;
-            if (!namePattern.test(nameValue)) {
-                alert("名前は半角英字と「.」のみが許可されています。");
+            // IDのバリデーション (数値のみ)
+            var idValue = idInput.value;
+            if (!/^\d+$/.test(idValue)) {
+                alert("IDは数値のみを入力してください。");
                 return false; // フォーム送信を中止
             }
 
-            // メールアドレスのバリデーション
-            var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-            if (!emailPattern.test(emailValue)) {
+            // 名前のバリデーション (日本語と漢字のみ)
+            var nameValue = nameInput.value;
+            if (!/^[ぁ-んァ-ン一-龠]+$/.test(nameValue)) {
+                alert("名前は日本語と漢字のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Kana_nameのバリデーション (ひらがなのみ)
+            var kanaNameValue = kanaNameInput.value;
+            if (!/^[ぁ-ん]+$/u.test(kanaNameValue)) {
+                alert("かな名はひらがなのみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Genderのバリデーション (男性または女性のみ)
+            var genderValue = genderInput.value;
+            if (!(genderValue === "男性" || genderValue === "女性")) {
+                alert("性別は男性または女性のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Emailのバリデーション (emailの形式)
+            var emailValue = emailInput.value;
+            if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(emailValue)) {
                 alert("有効なメールアドレスを入力してください。");
                 return false; // フォーム送信を中止
             }
 
-            return true; // バリデーションが成功したらフォーム送信を許可
+            // Phoneのバリデーション (数値のみ)
+            var phoneValue = phoneInput.value;
+            if (!/^\d+$/.test(phoneValue)) {
+                alert("電話番号は数値のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Addressのバリデーション (日本語と漢字のみ)
+            var addressValue = addressInput.value;
+            if (!/^[ぁ-んァ-ン一-龠]+$/.test(addressValue)) {
+                alert("住所は日本語と漢字のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Workplaceのバリデーション (漢字のみ)
+            var workplaceValue = workplaceInput.value;
+            if (!/^[一-龠]+$/.test(workplaceValue)) {
+                alert("職場は漢字のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // Householdのバリデーション (数値のみ)
+            var householdValue = householdInput.value;
+            if (!/^\d+$/.test(householdValue)) {
+                alert("世帯人数は数値のみを入力してください。");
+                return false; // フォーム送信を中止
+            }
+
+            // すべてのバリデーションが成功したらフォーム送信を許可
+            return true;
         }
     </script>
 </body>

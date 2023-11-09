@@ -25,10 +25,19 @@
         </style>
     </head>
     <body>
+        <h3>新規情報追加</h3>
         <p><a class="custom-button" href="/create">ユーザーの追加</a></p>
+        <h3>絞り込み機能</h3>
         <label for="filterKeyword">名前絞り込み: </label>
         <input type="text" id="filterKeyword">
         <button class="custom-button" id="filterButton">絞り込み</button>
+        <div id="statisticsResult">
+            <h3>統計情報</h3>
+            <p id="genderStats">男性: - 人  女性: - 人</p>
+            <p id="workplaceStats">各都道府県: - 人</p>
+            <p id="householdStats">各世帯数: - 世帯</p>
+        </div>
+        <button id="calculateStatistics" class="custom-button">統計を取得</button>
         <div id="selectedInfo">
             <h3>選択した情報一覧</h3>
             <table id="selectedTable">
@@ -96,6 +105,8 @@
                 <% }); %>
         </table>
         <script type="text/javascript">
+            let personas = JSON.parse('<%= JSON.stringify(personas) %>'.replace(/&#34;/g, '"'));
+
             document.getElementById("filterButton").addEventListener("click", function () {
                 var keyword = document.getElementById("filterKeyword").value.toLowerCase();
                 var nameCells = document.querySelectorAll('td:nth-child(2)');
@@ -111,7 +122,62 @@
                     }
                 });
             });
-            let personas = JSON.parse('<%= JSON.stringify(personas) %>'.replace(/&#34;/g, '"'));
+
+            document.getElementById("calculateStatistics").addEventListener("click", function () {
+                // 統計情報の初期化
+                let genderStats = { male: 0, female: 0 };
+                let workplaceStats = {};
+                let householdStats = {};
+
+                // 選択された情報から統計情報を計算
+                personas.forEach(function (persona) {
+                    if (!persona.isSelected) {
+                        // Genderの統計情報を計算
+                        if (persona.gender === "男性") {
+                            genderStats.male++;
+                        } else if (persona.gender === "女性") {
+                            genderStats.female++;
+                        }
+
+                        // Workplaceの統計情報を計算
+                        if (workplaceStats[persona.workplace]) {
+                            workplaceStats[persona.workplace]++;
+                        } else {
+                            workplaceStats[persona.workplace] = 1;
+                        }
+
+                        // Householdの統計情報を計算
+                        let householdCount = persona.household;
+                        console.log("Current Household Count:", householdCount);
+                        if (householdStats[householdCount]) {
+                            householdStats[householdCount]++;
+                        } else {
+                            householdStats[householdCount] = 1;
+                        }
+                        console.log("Updated Household Stats:", householdStats);
+                    }
+                });
+
+                console.log("Gender Stats:", genderStats);
+                console.log("Workplace Stats:", workplaceStats);
+                console.log("Household Stats:", householdStats);
+
+                // 統計情報を表示
+                document.getElementById("genderStats").textContent = `男性: ${genderStats.male} 人 女性: ${genderStats.female} 人`;
+
+                let workplaceStatsText = "各都道府県: ";
+                for (const workplace in workplaceStats) {
+                    workplaceStatsText += `${workplace}: ${workplaceStats[workplace]} 人 `;
+                }
+                document.getElementById("workplaceStats").textContent = workplaceStatsText;
+
+                let householdStatsText = "各世帯数: ";
+                for (const household in householdStats) {
+                    householdStatsText += `${household}人暮らし: ${householdStats[household]}世帯 `;
+                }
+                document.getElementById("householdStats").textContent = householdStatsText;
+            });
+
             var selectedInfo = [];
 
             document.querySelectorAll(".select-button").forEach(function (button) {
@@ -124,14 +190,13 @@
                     var selectedPersona = personas.find(function (persona) {
                         console.log("persona.id: " + persona.id);
                         return persona.id === userId;
+                        selectedPersona.isSelected = true;
                     });
                     console.log("選択したユーザー情報: ", selectedPersona);
 
 
                     if (selectedPersona) {
                         selectedInfo.push(selectedPersona);
-
-                        console.log("選択したユーザー情報: ", selectedPersona);
 
                         var row = button.parentElement.parentElement;
                         row.style.display = "none";
